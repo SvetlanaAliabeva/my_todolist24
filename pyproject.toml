@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "my_todolist"
+version = "0.1.0"
+description = ""
+authors = ["S_Kri <s_krivosheya@mail.ru>"]
+
+
+[tool.poetry.dependencies]
+python = "^3.11"
+django = "^4.2.1"
+envparse = "^0.2.0"
+djangorestframework = "^3.14.0"
+django-environ = "^0.10.0"
+psycopg2-binary = "^2.9.6"
+django-filter = "^23.2"
+drf-spectacular = "^0.26.2"
+signals = "^0.0.2"
+docker-compose = "^1.29.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

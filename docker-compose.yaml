@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_db}
+    ports:
+      - "5432:5432"
+    container_name: retail_db
+    restart: always
+    healthcheck:
+      test: pg_isready -U ${POSTGRES_USER} -d {POSTGRES_db}
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    volumes:
+      - my_todolist2:/var/lib/postgresql/data/
+
+  run_migrations:
+    build: .
+    env_file: .env
+    environment:
+      POSTGRES_HOST: db
+      command: python manage.py migrate
+
+  api:
+      build: .
+      env_file: .env
+      environment:
+        POSTGRES_HOST: db
+      depends_on:
+        db:
+          condition: service_healthy
+      ports:
+        - "8000:8000"
+      volumes:
+        - ./core:/opt/core
+        - ./todolist:/opt/app/todolist
+
+  frontend:
+    image: sermalenk/skypro-front:lesson-34
+#    restart: : on-failure
+#      ports:
+#        -"80:80"
+#      depends_on:
+#        api:
+#      condition: service_started
+
+  volumes:
+    my_todolist2:
