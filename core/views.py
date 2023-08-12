@@ -9,7 +9,7 @@ from rest_framework.generics import CreateAPIView
 from rest_framework.response import Response
 
 from core.models import User
-from core.serializer import UserRegistrationSerializer
+from core.serializers import UserRegistrationSerializer
 
 
 class UserCreateView(CreateAPIView):
@@ -31,3 +31,5 @@ class UserLoginView(CreateAPIView):
             login(request, user)
             return Response('Successful login', status=status.HTTP_200_OK)
         raise AuthenticationFailed('Invalid username or password')
+
+

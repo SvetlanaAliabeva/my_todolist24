@@ -17,7 +17,7 @@ services:
       timeout: 3s
       retries: 10
     volumes:
-      - my_todolist2.2:/var/lib/postgresql/data/
+      - my_todolist2:/var/lib/postgresql/data/
 
   run_migrations:
     build: .
@@ -53,8 +53,7 @@ services:
     - django-static:/opt/app/static/
 
   frontend:
-    image: sermalenk/skypro-front:lesson-34
-    restart: on-failure
+    image: sermalenk/skypro-front:lesson-35
     ports:
       - "80:80"
     depends_on:
