@@ -63,8 +63,12 @@ services:
       collect_static:
         condition: service_healthy
 
+#    volumes:
+#      - ./deploy/nginx.conf:/etc/nginx/conf/d/default.conf
+#      - django-static:/usr/share/nginx/html/static/
+
     volumes:
-      - ./deploy/nginx.conf:/etc/nginx/conf/d/default.conf
+      - ./deploy/nginx.conf:/etc/nginx/conf.d/default.conf
       - django-static:/usr/share/nginx/html/static/
 
 volumes:

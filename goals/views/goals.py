@@ -21,19 +21,19 @@ class GoalListView(generics.ListAPIView):
     search_fields = ['title', 'description']
 
     def get_queryset(self):
-        return Goal.objects.select_related('user').filter(
-            user=self.request.user, category__is_deleted=False
-        ).exclude(status=Goal.Status.archived)
+        return (
+            Goal.objects.filter(
+                category__board_participants__user=self.request.user,
+                category__is_deleted=False
+            ).exclude(status=Goal.Status.archived)
+        )
 
 
 class GoalDetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [GoalPermission]
     serializer_class = GoalSerializer
+    queryset = Goal.objects.exclude(status=Goal.status.archived)
 
-    def get_queryset(self):
-        return Goal.objects.select_related('user').filter(
-            category__is_deleted=False
-        ).exclude(status=Goal.status.archived)
 
     def perform_destroy(self, instance: Goal) -> None:
         instance.status = Goal.Status.archived
