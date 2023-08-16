@@ -8,11 +8,12 @@ WORKDIR /opt
 
 COPY poetry.lock pyproject.toml ./
 
-RUN poetry config virtualenvs.create false \
-    && poetry install --no-root
+#
+#RUN poetry config virtualenvs.create false \
+#    && poetry install --no-root
 
-#RUN poetry config virtualenvs.create false\
-#    && poetry install --without dev --no-root
+RUN poetry config virtualenvs.create false\
+    && poetry install --without dev --no-root
 
 COPY . .
 
